@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # World Happiness Report Analysis (2015-2019)
 
 ![Happiness Heatmap](vizualization/correlation_heatmap.png)
@@ -45,3 +46,6 @@ This project is open source and available under the [MIT License](LICENSE).
 
 ## 🤝 Contributing
 Contributions, issues, and feature requests are welcome! Feel free to check [issues page]() if you want to contribute.
+=======
+# world-happiness-analysis
+>>>>>>> 20fb002ccf21948c7c60e6f2326a4fa7faa30962
