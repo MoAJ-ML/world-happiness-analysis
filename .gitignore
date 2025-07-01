@@ -62,6 +62,4 @@ coverage.xml
 # Visual Studio Code
 .vscode/
 
-# Data and outputs
-vizualization/
-world_happiness_report.csv
+
