@@ -5,7 +5,7 @@ This repository harmonizes five annual CSV files and explores associations with 
 ## Run
 
 ```bash
-pip install pandas numpy matplotlib seaborn scikit-learn
+pip install -r requirements.txt
 MPLBACKEND=Agg python merge_happiness_data.py
 python -m unittest discover -s tests
 ```
@@ -13,5 +13,6 @@ python -m unittest discover -s tests
 The script maps changing column names, fills missing 2018/2019 regions from earlier country mappings where available, and writes `world_happiness_report.csv`. It standardizes predictors using training countries only, checks a held-out set of countries, and reports R²/MAE in `vizualization/validation_results.json`. Plots show standardized linear coefficients and descriptive correlations. A country-held-out split still does not test later years, and unobserved social factors can confound the associations. The earlier `feature_importance.png`, `pairplot.png`, and summary text are historical outputs under the previous method.
 
 The 2026-11-10 rerun on the five committed CSVs produced country-held-out R² 0.779 and MAE 0.409 score units across 34 test countries. The JSON includes the five input hashes and exact split counts; these results are descriptive associations only.
+The PR smoke workflow runs the harmonization test on Python 3.12 without downloading data.
 
 Suggested repository description: “Harmonized 2015–2019 happiness CSV analysis with country-held-out regression and explicit provenance limits.”
