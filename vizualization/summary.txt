@@ -1,19 +1,11 @@
+World happiness CSV analysis (2015-2019)
+=========================================
 
-World Happiness Report Analysis (2015-2019)
-===========================================
+Current validation is in validation_results.json. The 10 November 2026
+country-held-out rerun reported R2 0.778830 and MAE 0.409176 score units
+on 34 held-out countries. The five input CSV hashes are in that JSON.
 
-- R² Score for Linear Regression: 0.747
-- Top features predicting happiness: Freedom to make life choices, Healthy life expectancy, GDP per capita
-- Highest average happiness by region: Australia and New Zealand (7.30)
-- Lowest average happiness by region: Sub-Saharan Africa (4.17)
-- Correlation with happiness: 
-Happiness Score                 1.000000
-GDP per capita                  0.789719
-Freedom to make life choices    0.553365
-Perceptions of corruption       0.398418
-
-See visualizations in the 'vizualization' folder:
-- feature_importance.png
-- happiness_by_region.png
-- correlation_heatmap.png
-- pairplot.png
+These are associations within the committed files, not causal effects or
+future-year predictions. Exact source lineage and data rights for the CSVs
+remain unverified. The prior 0.747 R2 and feature-ranking summary were
+from an earlier method and are not current validation results.

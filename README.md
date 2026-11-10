@@ -1,47 +1,18 @@
-# World Happiness Report Analysis (2015-2019)
+# World Happiness Report CSV Analysis (2015–2019)
 
-![Happiness Heatmap](vizualization/correlation_heatmap.png)
+This repository harmonizes five annual CSV files and explores associations with reported happiness scores. Associations are not causal effects. The CSVs' original publisher, extraction method, revisions, and redistribution rights are **not documented in this repository**; the [official World Happiness Report](https://worldhappiness.report/) is context, not verified provenance for these exact files. Hashes of the committed inputs are recorded by the script for reproducibility. Do not treat the repo's MIT software license as a license for third-party data.
 
-## Overview
-This project analyzes global happiness trends using the World Happiness Report data from 2015 to 2019. The analysis identifies key factors influencing happiness scores across different regions and explores relationships between happiness and various socio-economic indicators.
+## Run
 
-## 📊 Key Insights
-- **Top Predictors of Happiness**: Social support, GDP per capita, and healthy life expectancy have the strongest positive correlation with happiness scores.
-- **Regional Variations**: Western Europe and North America consistently report the highest happiness scores, while Sub-Saharan Africa shows the lowest averages.
-- **Impact of Freedom**: Freedom to make life choices shows a strong positive correlation with happiness across all regions.
-
-## 🛠️ Technical Implementation
-- **Data Processing**: Merged and cleaned 5 years of World Happiness Report data
-- **Analysis**: Performed exploratory data analysis and statistical modeling
-- **Visualization**: Created clear, informative visualizations using Matplotlib and Seaborn
-- **Tools**: Python, Pandas, Scikit-learn, Matplotlib, Seaborn
-
-## 📂 Project Structure
-```
-├── merge_happiness_data.py   # Main analysis script
-├── world_happiness_report.csv # Merged dataset
-├── vizualization/            # Generated visualizations
-│   ├── correlation_heatmap.png
-│   ├── feature_importance.png
-│   ├── happiness_by_region.png
-│   ├── pairplot.png
-│   └── summary.txt
-└── README.md                 # This file
+```bash
+pip install -r requirements.txt
+MPLBACKEND=Agg python merge_happiness_data.py
+python -m unittest discover -s tests
 ```
 
-## 🚀 Getting Started
-1. Clone this repository
-2. Install requirements: `pip install pandas numpy matplotlib seaborn scikit-learn`
-3. Run the analysis: `python merge_happiness_data.py`
+The script maps changing column names, fills missing 2018/2019 regions from earlier country mappings where available, and writes `world_happiness_report.csv`. The six model inputs are published components of the reported happiness score. The country-held-out R²/MAE in `vizualization/validation_results.json` therefore check how a linear fit reconstructs a score from its components; they are **not independent predictive performance**. Scaling is fitted on training countries only. Plots show linear fit coefficients on those components and descriptive correlations, not causal effects. The split does not test later years. The earlier `feature_importance.png`, `pairplot.png`, and summary text are historical outputs under the previous method.
 
-## 📝 Summary of Findings
-Detailed findings are available in `vizualization/summary.txt`
+The 2026-11-10 rerun on the five committed CSVs produced a component-fit country-held-out R² of 0.779 and MAE of 0.409 score units across 34 test countries. The six components sum to less than the score because the source includes an unexplained/dystopia residual; the median gap in this snapshot is recorded in the JSON. These figures describe score reconstruction, not a new forecast or an independent model of well-being. The JSON includes the five input hashes and exact split counts.
+The PR smoke workflow runs the harmonization test on Python 3.12 without downloading data.
 
-## 📊 Sample Visualization
-![Happiness by Region](vizualization/happiness_by_region.png)
-
-## 📄 License
-This project is open source and available under the [MIT License](LICENSE).
-
-## 🤝 Contributing
-Contributions, issues, and feature requests are welcome! Feel free to check [issues page]() if you want to contribute.
+Suggested repository description: “Harmonized 2015–2019 happiness CSV analysis with country-held-out regression and explicit provenance limits.”
