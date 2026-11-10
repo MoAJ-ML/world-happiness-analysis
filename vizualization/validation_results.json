@@ -7,12 +7,13 @@
     "2019.csv": "daeac53b9860b81cfb82f282c70fb5feff081a973bd9bc2ab11f2d03a13b29ea"
   },
   "metrics": {
-    "country_held_out_r2": 0.7788301637336971,
-    "country_held_out_mae": 0.40917602822043037,
+    "component_fit_country_held_out_r2": 0.7788301637336971,
+    "component_fit_country_held_out_mae": 0.40917602822043037,
+    "median_unexplained_score_component": 2.021,
     "train_countries": 136,
     "test_countries": 34
   },
   "region_rows_mapped": 774,
   "region_rows_total": 782,
-  "limits": "Associations are not causal; CSV publisher lineage and redistribution rights are unverified."
+  "limits": "The six inputs are published score components. Held-out fit is a component reconstruction diagnostic, not independent prediction or a causal effect. CSV publisher lineage and redistribution rights are unverified."
 }

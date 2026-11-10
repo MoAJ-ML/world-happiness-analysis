@@ -52,6 +52,7 @@ def load_and_harmonize(files=FILES):
 
 
 def grouped_association(merged):
+    """Describe fit using published score components, not independent predictors."""
     clean = merged.dropna(subset=['Happiness Score', *FEATURES]).copy()
     if clean['Country'].nunique() < 5:
         raise ValueError('Need at least five countries for a country-held-out check')
@@ -62,9 +63,11 @@ def grouped_association(merged):
     model.fit(train[FEATURES], train['Happiness Score'])
     prediction = model.predict(test[FEATURES])
     coefficients = pd.Series(model[-1].coef_, index=FEATURES).sort_values()
+    component_gap = clean['Happiness Score'] - clean[FEATURES].sum(axis=1)
     return clean, coefficients, {
-        'country_held_out_r2': float(r2_score(test['Happiness Score'], prediction)),
-        'country_held_out_mae': float(mean_absolute_error(test['Happiness Score'], prediction)),
+        'component_fit_country_held_out_r2': float(r2_score(test['Happiness Score'], prediction)),
+        'component_fit_country_held_out_mae': float(mean_absolute_error(test['Happiness Score'], prediction)),
+        'median_unexplained_score_component': float(component_gap.median()),
         'train_countries': int(train['Country'].nunique()),
         'test_countries': int(test['Country'].nunique()),
     }
@@ -78,7 +81,11 @@ def main():
     out.mkdir(exist_ok=True)
     plt.figure(figsize=(8, 5))
     sns.barplot(x=coefficients.values, y=coefficients.index)
-    plt.title('Standardized associations with Happiness Score')
+    plt.title('Linear fit coefficients on published score components')
+    plt.xlabel('Coefficient per one standard deviation of component')
+    plt.ylabel('Score component')
+    plt.figtext(0.5, 0.01, 'Components are parts of the reported score, not independent predictors.',
+                ha='center', fontsize=8)
     plt.tight_layout()
     plt.savefig(out / 'standardized_associations.png')
     plt.close()
@@ -99,7 +106,7 @@ def main():
     report = {'input_sha256': hashes, 'metrics': metrics,
               'region_rows_mapped': int(merged['Region'].notna().sum()),
               'region_rows_total': len(merged),
-              'limits': 'Associations are not causal; CSV publisher lineage and redistribution rights are unverified.'}
+              'limits': 'The six inputs are published score components. Held-out fit is a component reconstruction diagnostic, not independent prediction or a causal effect. CSV publisher lineage and redistribution rights are unverified.'}
     (out / 'validation_results.json').write_text(json.dumps(report, indent=2))
     return report
 
